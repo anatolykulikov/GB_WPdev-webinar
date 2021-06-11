@@ -1,0 +1,49 @@
+version: '3.0'
+services:
+  nginx:
+    container_name: wordpress_nginx
+    image: nginx
+    restart: always
+    ports:
+      - 10500:80
+    depends_on:
+      - php
+      - mysql
+    volumes:
+      - ./config/nginx/conf.d/default.nginx:/etc/nginx/conf.d/default.conf
+      - ./html/:/var/www/html/
+    networks:
+      - backend
+
+  php:
+    container_name: wordpress_php
+    restart: always
+    build:
+      context: ./config/php
+    volumes:
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./html/:/var/www/html/
+    networks:
+      - backend
+
+  mysql:
+    container_name: wordpress_mysql
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 10501:3306
+    volumes: 
+      - data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+volumes:
+    data:

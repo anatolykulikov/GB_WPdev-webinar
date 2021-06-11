@@ -1,0 +1,40 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+
+    &_logo {
+        display: block;
+
+        img {
+            width: 48px;
+            height: auto;
+        }
+    }
+
+
+    &_menu {
+        ul {
+            display: flex;
+            align-items: center;
+            list-style: none;
+
+            li {
+                display: block;
+                margin-right: 25px;
+
+                a {
+                    text-decoration: none;
+                    font-weight: 600;
+                    color: $Deselected;
+                    transition: all linear .2s;
+
+                    &:hover {
+                        color: $Selected;
+                    }
+                }
+            }
+        }
+    }
+}
